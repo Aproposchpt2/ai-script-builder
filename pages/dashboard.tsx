@@ -6,20 +6,66 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FlowCard from '@/components/FlowCard';
 import { getFlows, deleteFlow, type SavedFlow } from '@/lib/storage';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [flows, setFlows] = useState<SavedFlow[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [flows, setFlows]       = useState<SavedFlow[]>([]);
+  const [mounted, setMounted]   = useState(false);
+  const [cloudMode, setCloudMode] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setFlows(getFlows());
+
+    async function loadFlows() {
+      // Auth gate + cloud load when Supabase is configured
+      if (isSupabaseConfigured() && supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          router.replace('/login');
+          return;
+        }
+        // Load from cloud
+        try {
+          const res = await fetch('/api/get-flows', {
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          });
+          if (res.ok) {
+            const cloudFlows: Array<{
+              id: string; name: string; text_input: string;
+              parsed_output: object; engine: string; created_at: string;
+            }> = await res.json();
+            // Normalise to SavedFlow shape
+            setFlows(cloudFlows.map(f => ({
+              id:        f.id,
+              name:      f.name,
+              text:      f.text_input,
+              parsed:    f.parsed_output,
+              engine:    f.engine as 'ai' | 'rules',
+              createdAt: f.created_at,
+            })));
+            setCloudMode(true);
+            return;
+          }
+        } catch {
+          // fall through to localStorage
+        }
+      }
+      // Local-only fallback (Supabase not configured or fetch failed)
+      setFlows(getFlows());
+    }
+
+    loadFlows();
   }, []);
 
   function handleDelete(id: string) {
-    deleteFlow(id);
-    setFlows(getFlows());
+    if (cloudMode) {
+      // Optimistic remove from UI; server delete not yet implemented
+      setFlows(prev => prev.filter(f => f.id !== id));
+    } else {
+      deleteFlow(id);
+      setFlows(getFlows());
+    }
   }
 
   function handleOpen(flow: SavedFlow) {
@@ -41,7 +87,7 @@ export default function DashboardPage() {
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.4rem' }}>
             <div>
               <p style={{ fontSize: '.66rem', fontWeight: 700, letterSpacing: '.2em', textTransform: 'uppercase', color: '#5bd3ff', marginBottom: '.4rem' }}>
-                AI4 Contact Center · Dashboard
+                AI4 Contact Center · Dashboard {cloudMode && <span style={{ marginLeft: '.5rem', background: 'rgba(91,211,255,.12)', border: '1px solid rgba(91,211,255,.25)', borderRadius: '999px', padding: '.1rem .55rem', fontSize: '.55rem' }}>☁ Cloud</span>}
               </p>
               <h1 style={{ fontSize: 'clamp(1.6rem,3.5vw,2.4rem)', fontWeight: 700, lineHeight: 1.1, margin: 0, color: '#fff' }}>
                 Saved Flows

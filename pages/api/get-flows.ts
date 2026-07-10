@@ -1,25 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 
-type Body   = { name?: string; text: string; parsed: object; engine?: string };
-type Result = { ok: true; id: string } | { error: string };
+type Flow = {
+  id: string;
+  name: string;
+  text_input: string;
+  parsed_output: object;
+  engine: string;
+  created_at: string;
+};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Result>
+  res: NextApiResponse<Flow[] | { error: string }>
 ) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
-
-  const { name, text, parsed, engine } = req.body as Body;
-  if (!text || !parsed) return res.status(400).json({ error: 'text and parsed are required' });
+  if (req.method !== 'GET') return res.status(405).json({ error: 'GET only' });
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey  = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  // If Supabase is not configured, return ok (client falls back to localStorage)
-  if (!supabaseUrl || !serviceKey) {
-    return res.status(200).json({ ok: true, id: 'local' });
-  }
+  if (!supabaseUrl || !serviceKey) return res.status(200).json([]);
 
   const authHeader  = req.headers.authorization ?? '';
   const accessToken = authHeader.replace('Bearer ', '');
@@ -35,16 +34,11 @@ export default async function handler(
 
   const { data, error } = await supabase
     .from('flows')
-    .insert({
-      user_id:       user.id,
-      name:          name ?? 'Untitled Flow',
-      text_input:    text,
-      parsed_output: parsed,
-      engine:        engine ?? 'rules',
-    })
-    .select('id')
-    .single();
+    .select('id, name, text_input, parsed_output, engine, created_at')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(100);
 
   if (error) return res.status(500).json({ error: error.message });
-  return res.status(200).json({ ok: true, id: data.id });
+  return res.status(200).json(data ?? []);
 }
