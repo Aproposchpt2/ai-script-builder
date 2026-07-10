@@ -6,6 +6,7 @@ const NAV = [
   { href: '/builder',    label: 'Builder'   },
   { href: '/designer',   label: 'Designer'  },
   { href: '/troubleshooter', label: 'Troubleshooter' },
+  { href: '/routing-optimizer', label: 'Routing Optimizer' },
   { href: '/prompt-manager', label: 'Prompt Manager' },
   { href: '/templates',  label: 'Templates' },
   { href: '/dashboard',  label: 'Dashboard' },
