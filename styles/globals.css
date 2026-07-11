@@ -36,3 +36,10 @@ body { background: #050b14; color: #e8f0fe; font-family: var(--font-body), 'Inte
   letter-spacing: -0.02em;
   line-height: 1.06;
 }
+
+.mc-hero-overlay {
+  background: linear-gradient(165deg, rgba(8, 18, 34, 0.72), rgba(8, 18, 34, 0.48));
+  border: 1px solid rgba(121, 180, 255, 0.26);
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}

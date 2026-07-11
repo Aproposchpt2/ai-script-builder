@@ -21,33 +21,53 @@ export default function HomePage() {
     <>
       <Header />
       <main className="mc-shell mc-grid" style={{ color: '#e8f0fe' }}>
-        <section style={{ maxWidth: 1180, margin: '0 auto', padding: '88px 24px 54px', position: 'relative' }}>
-          <div style={{ display: 'inline-flex', gap: 8, alignItems: 'center', border: '1px solid rgba(121,180,255,.35)', borderRadius: 999, padding: '7px 14px', background: 'rgba(19,38,68,.45)', marginBottom: 18 }}>
-            <span style={{ width: 8, height: 8, borderRadius: 999, background: '#45d0ff' }} />
-            <span style={{ fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: '#9fd8ff', fontWeight: 700 }}>
-              Mission Control Premium
-            </span>
-          </div>
+        <section
+          style={{
+            maxWidth: 1180,
+            margin: '0 auto',
+            padding: '84px 24px 54px',
+            position: 'relative',
+            minHeight: 560,
+            display: 'flex',
+            alignItems: 'center',
+            backgroundImage:
+              "linear-gradient(100deg, rgba(3,10,20,.84) 15%, rgba(3,10,20,.50) 52%, rgba(3,10,20,.80) 100%), url('/images/hero-embedded.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 22%',
+            borderRadius: 18,
+            border: '1px solid rgba(121,180,255,.24)',
+            overflow: 'hidden',
+            boxShadow: '0 18px 48px rgba(0,0,0,.45)',
+          }}
+        >
+          <div className="mc-hero-overlay" style={{ maxWidth: 760, padding: '30px 28px' }}>
+            <div style={{ display: 'inline-flex', gap: 8, alignItems: 'center', border: '1px solid rgba(121,180,255,.35)', borderRadius: 999, padding: '7px 14px', background: 'rgba(19,38,68,.45)', marginBottom: 18 }}>
+              <span style={{ width: 8, height: 8, borderRadius: 999, background: '#45d0ff' }} />
+              <span style={{ fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: '#9fd8ff', fontWeight: 700 }}>
+                Mission Control Premium
+              </span>
+            </div>
 
-          <h1 className="mc-title" style={{ fontSize: 'clamp(2.3rem,5.5vw,4.5rem)', fontWeight: 850, maxWidth: 900 }}>
-            AI-Native Contact Center OS
-            <br />
-            <span style={{ color: '#68d6ff' }}>Built for Executive-Grade Operations</span>
-          </h1>
+            <h1 className="mc-title" style={{ fontSize: 'clamp(2.3rem,5.5vw,4.5rem)', fontWeight: 850, maxWidth: 900 }}>
+              AI-Native Contact Center OS
+              <br />
+              <span style={{ color: '#68d6ff' }}>Built for Executive-Grade Operations</span>
+            </h1>
 
-          <p style={{ marginTop: 20, maxWidth: 720, color: 'rgba(232,240,254,.72)', fontSize: 'clamp(1rem,1.8vw,1.17rem)', lineHeight: 1.7 }}>
-            Orchestrate voice, chat, email, SMS, and social with one unified intelligence layer.
-            Deploy faster, score every interaction, enforce policy in real time, and operate with
-            mission-control visibility across every queue and team.
-          </p>
+            <p style={{ marginTop: 20, maxWidth: 720, color: 'rgba(232,240,254,.78)', fontSize: 'clamp(1rem,1.8vw,1.17rem)', lineHeight: 1.7 }}>
+              Orchestrate voice, chat, email, SMS, and social with one unified intelligence layer.
+              Deploy faster, score every interaction, enforce policy in real time, and operate with
+              mission-control visibility across every queue and team.
+            </p>
 
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 28 }}>
-            <Link href="/dashboard" style={{ textDecoration: 'none', background: '#59d3ff', color: '#04111e', fontWeight: 800, fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', padding: '13px 24px', borderRadius: 10 }}>
-              Open Operations Dashboard
-            </Link>
-            <Link href="/flow-rewrite" style={{ textDecoration: 'none', background: 'rgba(12,22,39,.75)', border: '1px solid rgba(121,180,255,.35)', color: '#d5e9ff', fontWeight: 700, fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', padding: '13px 22px', borderRadius: 10 }}>
-              Launch AI Rewrite Engine
-            </Link>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 28 }}>
+              <Link href="/dashboard" style={{ textDecoration: 'none', background: '#59d3ff', color: '#04111e', fontWeight: 800, fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', padding: '13px 24px', borderRadius: 10 }}>
+                Open Operations Dashboard
+              </Link>
+              <Link href="/flow-rewrite" style={{ textDecoration: 'none', background: 'rgba(12,22,39,.75)', border: '1px solid rgba(121,180,255,.35)', color: '#d5e9ff', fontWeight: 700, fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', padding: '13px 22px', borderRadius: 10 }}>
+                Launch AI Rewrite Engine
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -77,4 +97,3 @@ export default function HomePage() {
     </>
   );
 }
-
