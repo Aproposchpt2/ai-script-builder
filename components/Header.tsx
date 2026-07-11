@@ -14,6 +14,7 @@ const NAV = [
   { href: '/flow-versioning', label: 'Flow Versioning' },
   { href: '/flow-deployment', label: 'Flow Deployment' },
   { href: '/flow-runtime-monitor', label: 'Runtime Monitor' },
+  { href: '/transcript-intelligence', label: 'Transcript Intelligence' },
   { href: '/prompt-manager', label: 'Prompt Manager' },
   { href: '/knowledge-vault', label: 'Knowledge Vault' },
   { href: '/templates',  label: 'Templates' },
