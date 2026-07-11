@@ -13,6 +13,7 @@ const NAV = [
   { href: '/flow-auto-repair', label: 'Flow Auto-Repair' },
   { href: '/flow-versioning', label: 'Flow Versioning' },
   { href: '/flow-deployment', label: 'Flow Deployment' },
+  { href: '/flow-runtime-monitor', label: 'Runtime Monitor' },
   { href: '/prompt-manager', label: 'Prompt Manager' },
   { href: '/knowledge-vault', label: 'Knowledge Vault' },
   { href: '/templates',  label: 'Templates' },
