@@ -21,3 +21,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .ai4-flow-versioning-store.json
+.ai4-flow-deployment-store.json
