@@ -1,6 +1,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: #050b14; color: #e8f0fe; font-family: 'Inter', sans-serif; }
+body { background: #050b14; color: #e8f0fe; font-family: var(--font-body), 'Inter', sans-serif; }
 
 .mc-shell {
   min-height: 100vh;
@@ -32,6 +32,7 @@ body { background: #050b14; color: #e8f0fe; font-family: 'Inter', sans-serif; }
 }
 
 .mc-title {
+  font-family: var(--font-display), 'Inter', sans-serif;
   letter-spacing: -0.02em;
   line-height: 1.06;
 }
